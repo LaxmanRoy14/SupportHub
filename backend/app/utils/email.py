@@ -1,6 +1,6 @@
 import os
-import smtplib
-from email.message import EmailMessage
+
+import resend
 
 from dotenv import load_dotenv
 
@@ -19,28 +19,22 @@ def get_required_env(name: str) -> str:
     return value
 
 
-EMAIL_HOST = get_required_env("EMAIL_HOST")
-EMAIL_USERNAME = get_required_env("EMAIL_USERNAME")
-EMAIL_PASSWORD = get_required_env("EMAIL_PASSWORD")
+RESEND_API_KEY = get_required_env("RESEND_API_KEY")
 EMAIL_FROM = get_required_env("EMAIL_FROM")
 
-EMAIL_PORT = int(
-    os.getenv("EMAIL_PORT", "587")
-)
+resend.api_key = RESEND_API_KEY
 
 def send_otp_email(
     recipient_email: str,
     otp: str
 ) -> None:
 
-    message = EmailMessage()
-
-    message["Subject"] = "SupportHub Email Verification"
-    message["From"] = EMAIL_FROM
-    message["To"] = recipient_email
-
-    message.set_content(
-        f"""
+    resend.Emails.send(
+        {
+            "from": EMAIL_FROM,
+            "to": [recipient_email],
+            "subject": "SupportHub Email Verification",
+            "text": f"""
 Hello,
 
 Your SupportHub verification OTP is:
@@ -53,19 +47,6 @@ If you did not create a SupportHub account, you can ignore this email.
 
 Regards,
 SupportHub Team
-"""
+""",
+        }
     )
-
-    with smtplib.SMTP(
-        EMAIL_HOST,
-        EMAIL_PORT
-    ) as server:
-
-        server.starttls()
-
-        server.login(
-            EMAIL_USERNAME,
-            EMAIL_PASSWORD
-        )
-
-        server.send_message(message)
