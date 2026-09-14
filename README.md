@@ -1916,7 +1916,6 @@ Full-Stack / AI Developer
 
 This project is intended primarily as a portfolio and learning project.
 
-Add a specific open-source license here if you intend to permit reuse, modification, or redistribution.
 
 ---
 
