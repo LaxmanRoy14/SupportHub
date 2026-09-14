@@ -1,5 +1,7 @@
 # SupportHub — Full-Stack Support Ticket Management System
 
+<img width="1536" height="1024" alt="supporthub_poster" src="https://github.com/user-attachments/assets/d9874c2b-b865-4f5f-9e7d-4909c10d071b" />
+
 > A production-style full-stack support platform where customers create and track support requests, agents manage and resolve tickets, tickets are automatically assigned using deterministic workload-aware rules, and an AI Ticket Assistant helps agents summarize, classify, prioritize, and draft responses.
 
 ---
@@ -199,37 +201,8 @@ The stack intentionally avoids unnecessary infrastructure such as Redis, Celery,
 
 SupportHub uses a simple monolithic full-stack architecture.
 
-```text
-                         ┌─────────────────────┐
-                         │     Web Browser     │
-                         │                     │
-                         │  React + Redux      │
-                         │  React Router       │
-                         │  Axios              │
-                         └──────────┬──────────┘
-                                    |
-                              HTTPS / REST
-                                    |
-                                    v
-                         ┌─────────────────────┐
-                         │      FastAPI        │
-                         │                     │
-                         │ Routers             │
-                         │ Dependencies        │
-                         │ Services            │
-                         │ Pydantic Schemas   │
-                         └──────────┬──────────┘
-                                    |
-                         ┌──────────┴──────────┐
-                         |                     |
-                         v                     v
-                ┌────────────────┐    ┌────────────────┐
-                │    MySQL       │    │   LLM Service  │
-                │                │    │                │
-                │ SQLAlchemy     │    │ LangChain      │
-                │ PyMySQL        │    │ Prompting      │
-                └────────────────┘    └────────────────┘
-```
+<img width="1536" height="1024" alt="overall_system_architecture" src="https://github.com/user-attachments/assets/1ed98944-f00e-4611-ad7f-2a8da97b71bb" />
+
 
 ## Architectural Principles
 
@@ -362,28 +335,8 @@ supporthub
 
 ## Entity Relationship Overview
 
-```text
-users
- |
- +-----------------------> otp_verifications
- |
- +-----------------------> tickets.created_by
- |
- +-----------------------> tickets.assigned_to
- |
- +-----------------------> comments.user_id
- |
- +-----------------------> agent_categories.agent_id
-                                      |
-                                      v
-                                categories
-                                      |
-                                      +-----> tickets.category_id
+<img width="1536" height="1024" alt="database_architecture" src="https://github.com/user-attachments/assets/019fbd6e-b752-49b8-bfe5-dc50e28cb755" />
 
-tickets
- |
- +-----------------------> comments.ticket_id
-```
 
 ## `users`
 
